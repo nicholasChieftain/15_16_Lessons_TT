@@ -1,0 +1,75 @@
+**Пятнашки, version_1.3**
+from random import randint
+play_ground=[[],[],[],[]]
+numbers = [0,1,2,3,4,6,7,8,9,10,11,12,13,14,15,'x']
+win = False # создаём переменную для проверки правильной последовательности
+for row in range(4):
+    for element in range(4):
+        index = randint(0, len(numbers)-1)
+        play_ground[row].append(numbers[index])
+        numbers.pop(index)
+
+while win == False: # выполняем цикл, пока переменная win не станет True
+    for row in play_ground:
+        print(row)
+    up = True
+    down = True
+    left = True
+    right = True
+    for row in range(4):
+        for element in range(4):
+            if play_ground[row][element] == 'x':
+                save_row = row
+                save_column = element
+
+    if save_row == 0 :
+        up = False
+    if save_row == 3:
+        down = False
+    if save_column == 0:
+        left = False
+    if save_column == 3:
+        right = False
+
+    action = input('Введите направление, куда хотите передвинуть плитку\n'
+                   '(вверх, вниз, влево, вправо)')
+
+    if action == 'вверх' and up == True:
+        save = play_ground[save_row - 1][save_column]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row - 1][save_column] = 'x'
+    elif action == 'вниз' and down == True:
+        save = play_ground[save_row + 1][save_column]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row + 1][save_column] = 'x'
+    elif action == 'влево' and left == True:
+        save = play_ground[save_row][save_column - 1]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row ][save_column - 1] = 'x'
+    elif action == 'вправо' and right == True:
+        save = play_ground[save_row][save_column + 1]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row][save_column + 1]  = 'x'
+    else:
+        print('Извините, сюда нельзя передвинуть')
+
+    check = True # создаём переменную дял проверки
+    for element in range(0,14): # цикл, который пробегает 15 плиток с цифрами
+        row_first = int(element/4) # поделив номер элемента на 4 и округлив его в меньшую сторону, получим номер строки
+        element_first = element % 4 # поделив номер элемента на 4 и взяв остаток от деления, получим номер элемента в строке
+        row_second = int((element+1)/4) # аналогичные действия, только для последующего элемента
+        element_second =  (element + 1) % 4
+        try:
+            if play_ground[row_first][element_first] != play_ground[row_second][element_second] - 1: # если элемент, не равен
+                                                            # следующему элементу - 1, то числа идут не по порядку
+                check = False # проверка не пройдена
+                break
+        except:
+            check = False
+            break
+    if check == True: # если проверка пройдена
+        win = True # игра заканчивается
+
+print('Вы выйграли !')
+
+

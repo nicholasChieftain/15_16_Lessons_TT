@@ -1,0 +1,54 @@
+**Пятнашки, version_1.2**
+from random import randint
+play_ground=[[],[],[],[]]
+numbers = [0,1,2,3,4,6,7,8,9,10,11,12,13,14,15,'x'] # создаём массив из плиток
+for row in range(4): # цикл для прохождения четырёх строк
+    for element in range(4): # цикл для прохождения 4-х элементов в строке
+        index = randint(0, len(numbers)-1) # случайным образом выбираем индекс из списка numbers
+        play_ground[row].append(numbers[index]) # добавляем элемент с этим индексом на игровое поле
+        numbers.pop(index) # удаляем элемент с этим индексом из списка numbers
+
+while True:
+    for row in play_ground:
+        print(row)
+    up = True
+    down = True
+    left = True
+    right = True
+    for row in range(4):
+        for element in range(4):
+            if play_ground[row][element] == 'x':
+                save_row = row
+                save_column = element
+
+    if save_row == 0 :
+        up = False
+    if save_row == 3:
+        down = False
+    if save_column == 0:
+        left = False
+    if save_column == 3:
+        right = False
+
+    action = input('Введите направление, куда хотите передвинуть плитку\n'
+                   '(вверх, вниз, влево, вправо)')
+
+    if action == 'вверх' and up == True:
+        save = play_ground[save_row - 1][save_column]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row - 1][save_column] = 'x'
+    elif action == 'вниз' and down == True:
+        save = play_ground[save_row + 1][save_column]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row + 1][save_column] = 'x'
+    elif action == 'влево' and left == True:
+        save = play_ground[save_row][save_column - 1]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row ][save_column - 1] = 'x'
+    elif action == 'вправо' and right == True:
+        save = play_ground[save_row][save_column + 1]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row][save_column + 1]  = 'x'
+    else:
+        print('Извините, сюда нельзя передвинуть')
+

@@ -1,0 +1,52 @@
+**Пятнашки, version_1.1**
+from random import randint
+play_ground=[[],[],[],[]]
+play_ground = [[3,2,1,4],[5,10,7,8],[9,6,11,'x'],[12,14,15,13]]
+
+while True:
+    for row in play_ground:
+        print(row)
+                # создаём переменные для проверки границ
+    up = True # перменная для проверки верхней границы
+    down = True # перменная для проверки нижней границы
+    left = True # перменная для проверки левой границы
+    right = True # перменная для проверки правой границы
+    for row in range(4):
+        for element in range(4):
+            if play_ground[row][element] == 'x':
+                save_row = row
+                save_column = element
+
+    if save_row == 0 : # если пустая клетка находится у верхней границы
+        up = False # Проверка не пройдена, устанавливаем проверку верхней границы в False
+    if save_row == 3: # если пустая клетка находится у нижней границы
+        down = False # Проверка не пройдена, устанавливаем проверку нижней границы в False
+    if save_column == 0: # если пустая клетка находится у левой границы
+        left = False # Проверка не пройдена, устанавливаем проверку левой границы в False
+    if save_column == 3: # если пустая клетка находится у правой границы
+        right = False # Проверка не пройдена, устанавливаем проверку правой границы в False
+
+    action = input('Введите направление, куда хотите передвинуть плитку\n'
+                   '(вверх, вниз, влево, вправо)')
+
+    if action == 'вверх' and up == True: # Выполняем действие, если только прошли проверки на верхнюю границу
+        save = play_ground[save_row - 1][save_column]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row - 1][save_column] = 'x'
+    elif action == 'вниз' and down == True: # Выполняем действие, если только прошли проверки на нижнюю границу
+        save = play_ground[save_row + 1][save_column]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row + 1][save_column] = 'x'
+    elif action == 'влево' and left == True: # Выполняем действие, если только прошли проверки на левую границу
+        save = play_ground[save_row][save_column - 1]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row ][save_column - 1] = 'x'
+    elif action == 'вправо' and right == True: # Выполняем действие, если только прошли проверки на правую границу
+        save = play_ground[save_row][save_column + 1]
+        play_ground[save_row][save_column] = save
+        play_ground[save_row][save_column + 1]  = 'x'
+    else: # Если указали направление, которое не прошло проверку
+        print('Извините, сюда нельзя передвинуть') # Выводим информацию об этом
+
+
+
